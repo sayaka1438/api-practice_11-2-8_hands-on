@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('status')->default('pending'); // pending, in_progress, completed
+            $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
             $table->date('due_date')->nullable();
             // 認証は実装しませんが、データ構造として所有者は持たせます
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
