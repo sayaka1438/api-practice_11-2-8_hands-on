@@ -49,13 +49,17 @@ class TaskController extends Controller
             'status' => 'sometimes|required|in:pending,in_progress,completed',
             'due_date' => 'nullable|date',
         ]);
-        $task = Task::where('user_id', 1)->findOrFail($id);
+        $task = Task::where('user_id', 1)
+            ->where('id', $id)
+            ->firstOrFail();
         $task->update($validated);
         return new TaskResource($task);
     }
     public function destroy(string $id)
     {
-        $task = Task::where('user_id', 1)->findOrFail($id);
+        $task = Task::where('user_id', 1)
+            ->where('id', $id)
+            ->firstOrFail();
         $task->delete();
         return response()->json(null, 204);
     }
